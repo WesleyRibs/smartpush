@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		endif;
 
 		if ($_POST['type'] == 'android') :
-			echo Push::sendPushIos( $_POST );
+			echo Push::sendPushAndroid( $_POST );
 		endif;
+
 }

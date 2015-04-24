@@ -3,15 +3,17 @@
 
 Class Push {
 
-	public $url = [
+	public static $url = array 
+		(
 			'IOS' 	  => 'ssl://gateway.sandbox.push.apple.com:2195', 
 			'ANDROID' => 'https://android.googleapis.com/gcm/send'
-		];
+		);
 
-	public $key = [
-			'IOS' 		=> 'Wesinline1',
-			'ANDROID'	=> 'AIzaSyB5Lx8jMnC3W_szJM2YlFw9m51xby9fOfE'
-		];
+	public static $key = array 
+		(
+			'IOS' 		=> 'Wesinline1',								# Put your private key's passphrase here.
+			'ANDROID'	=> 'AIzaSyB5Lx8jMnC3W_szJM2YlFw9m51xby9fOfE' 	# API access key from Google API's Console.
+		);
 
 
 	/**
@@ -21,7 +23,7 @@ Class Push {
 	* @param array $data ['deviceToken', 'msg', 'badge']
 	* @return void
 	**/
-	public function sendPushIos( $data )
+	public static function sendPushIos( $data )
 	{
 		if (!$data || !$data['deviceToken'] || !$data['msg'])
 			return false;
@@ -29,10 +31,10 @@ Class Push {
 
 		$ctx = stream_context_create();
 		stream_context_set_option($ctx, 'ssl', 'local_cert', 'ApnsDev.pem');
-		stream_context_set_option($ctx, 'ssl', 'passphrase', self::key['IOS']);
+		stream_context_set_option($ctx, 'ssl', 'passphrase', self::$key['IOS']);
 
 		# Open a connection to the APNS server
-		$fp = stream_socket_client(self::url['IOS'], $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+		$fp = stream_socket_client(self::$url['IOS'], $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
 		if (!$fp)
 			exit("Failed to connect: $err $errstr" . PHP_EOL);
@@ -40,11 +42,12 @@ Class Push {
 		echo 'Connected to APNS' . PHP_EOL;
 
 		# Create the payload body
-		$body['aps'] = array(
+		$body['aps'] = array
+		(
 			'badge' => ($data['badge']) ? $data['badge'] : 1,
 			'alert' => $data['msg'],
 			'sound' => 'default'
-			);
+		);
 
 		# Encode the payload as JSON
 		$payload = json_encode($body);
@@ -75,16 +78,16 @@ Class Push {
 	*				'title', 'subtitle', 'tickerText']
 	* @return void
 	**/
-	public function sendPushAndroid( $data )
+	public static function sendPushAndroid( $data )
 	{
 		if (!$data || !$data['deviceToken'] 
 			|| !$data['msg'] || !$data['title']
 			|| !$data['subtitle'])
 			return false;
 
-
 		// prep the bundle
-		$msg = [
+		$msg = array 
+		(
 			'message' 	=> $data['msg'],
 			'title'		=> $data['title'],
 			'subtitle'	=> $data['subtitle'],
@@ -93,20 +96,22 @@ Class Push {
 			'sound'		=> 1,
 			'largeIcon'	=> 'large_icon',
 			'smallIcon'	=> 'small_icon'
-		];
+		);
 
-		$fields = [
+		$fields = array
+		(
 			'registration_ids' 	=> $data['deviceToken'],
 			'data'				=> $msg
-		];
+		);
 		 
-		$headers = [
-			'Authorization: key=' . self::key['ANDROID'],
+		$headers = array
+		(
+			'Authorization: key=' . self::$key['ANDROID'],
 			'Content-Type: application/json'
-		];
+		);
 		 
 		$ch = curl_init();
-		curl_setopt( $ch,CURLOPT_URL, self::url['ANDROID'] );
+		curl_setopt( $ch,CURLOPT_URL, self::$url['ANDROID'] );
 		curl_setopt( $ch,CURLOPT_POST, true );
 		curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
 		curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
