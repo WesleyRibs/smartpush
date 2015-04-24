@@ -18,7 +18,7 @@ Class Push {
 
 	/**
 	* sendPushIos - method which send 
-	* a push notification for APNS.
+	* a push notification to APNS.
 	*
 	* @param array $data ['deviceToken', 'msg', 'badge']
 	* @return void
@@ -71,7 +71,7 @@ Class Push {
 
 	/**
 	* sendPushAndroid - method which send 
-	* a push notification for Google.
+	* a push notification to Google.
 	*
 	* @param array $data [
 	*				'deviceToken' => (array), 'msg', 
