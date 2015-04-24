@@ -14,7 +14,7 @@ Make a request POST with fields:
 
 <h3>ANDROID</h3>
   * type => 'android'
-  * deviceToken
+  * deviceToken => array
   * title
   * subtitle
   * msg
