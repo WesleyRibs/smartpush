@@ -6,13 +6,6 @@ Send push notification to APNS and Google
 # Usage example:
 Make a request POST with fields:
 
-  #ANDROID
-  * type => 'android'
-  * deviceToken
-  * title
-  * subtitle
-  * msg
-  * tickerText (optional)
   
   #IOS
   * type => 'ios'
