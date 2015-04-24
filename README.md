@@ -19,3 +19,11 @@ Make a request POST with fields:
   * deviceToken
   * badge => int optional
   * msg
+
+  #ANDROID
+  * type => 'android'
+  * deviceToken
+  * title
+  * subtitle
+  * msg
+  * tickerText (optional)
