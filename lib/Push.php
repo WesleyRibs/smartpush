@@ -17,7 +17,7 @@ Class Push {
 
 
 	/**
-	* sendPushIos - method which send 
+	* sendPushAndroid - method which send 
 	* a push notification for Google.
 	*
 	* @param array $data ['deviceToken', 'msg', 'badge']
